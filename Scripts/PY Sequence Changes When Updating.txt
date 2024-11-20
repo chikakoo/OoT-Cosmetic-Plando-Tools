@@ -13,6 +13,8 @@ Add this to the block disabling battle music in patch_music to fix the Goron Cit
 	rom.write_byte(0x22A8458, 0x01)
 	rom.write_byte(0x22A8459, 0x27)
 	rom.write_byte(0x22A845D, 0x00)
+	
+==========================
 
 To remap music so more sequences are heard, add this block after the block mentioned above (outside the if-statement)
     # Remap scene sequences
@@ -85,6 +87,8 @@ To remap music so more sequences are heard, add this block after the block menti
     rom.write_byte(0x3075007, 0x56) # Outside ToT
     rom.write_byte(0x30E4007, 0x56)
     rom.write_byte(0x3139007, 0x56)
+	
+==========================
 	
     # Overwriting nighttime SFX values so sequences play at nighttime
     
