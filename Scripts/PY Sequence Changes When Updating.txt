@@ -1,0 +1,238 @@
+Note that disabling battle music is important for sequence files since it will often result in the background music being cut out. That's the reason for the Goron City music change below, as well as grouping this change with that setting.
+
+=============
+COSMETICS.PY
+=============
+Add this to the block disabling battle music in patch_music to fix the Goron City music issues (# Remove battle music):
+	# Change the lost woods music in Goron City to be a boulder
+	# Then move it to Y=0 so it's not in the way
+	# Child values, then adult values
+	rom.write_byte(0x22A8074, 0x01)
+	rom.write_byte(0x22A8075, 0x27)
+	rom.write_byte(0x22A8079, 0x00)
+	rom.write_byte(0x22A8458, 0x01)
+	rom.write_byte(0x22A8459, 0x27)
+	rom.write_byte(0x22A845D, 0x00)
+
+To remap music so more sequences are heard, add this block after the block mentioned above (outside the if-statement)
+    # Remap scene sequences
+    rom.write_byte(0x2875007, 0x4F) # Shiek Theme -> GTG (used to be the same as DC)
+    rom.write_byte(0x2499007, 0x4A) # Fairy Flying -> Inside the Deku Tree (was shared with grottos)
+    rom.write_byte(0x32C6007, 0x4C) # Windmill Hut -> BotW (was shared with Shadow Temple)
+    rom.write_byte(0x3292007, 0x29) # Zelda Theme -> Thieves' Hideout  (cutscenes only; never heard)
+    rom.write_byte(0x21DC007, 0x1A) # Battle -> Desert Colossus (usually turned off - only heard while fishing)
+    
+    # Castle -> Castle Escape (never heard in triforce hunt)
+    rom.write_byte(0x21F6007, 0x62) # Hyrule Castle
+    rom.write_byte(0x292B00F, 0x62) # Outside Ganon's Castle
+    rom.write_byte(0x292B00E, 0x13) # Set the nighttime SFX value to allow music
+     
+    # Lake Hylia -> Deku Tree (instead of HF song - also this is the cutscene Deku Tree song)
+    # Main scene, then child header, then adult header (probably)
+    rom.write_byte(0x20CB00F, 0x4B)
+    rom.write_byte(0x20D2457, 0x4B)
+    rom.write_byte(0x20D2787, 0x4B)
+    
+    # Kotake and Koume -> Death Mountain Trail (barely ever heard, if ever)
+    # Child, then adult headers (probably)
+    rom.write_byte(0x221D00F, 0x61)
+    rom.write_byte(0x22245A7, 0x61)
+    
+    # Ganondorf Theme -> Zora's River (barely ever heard, if ever)
+    # Child, then adult headers (probably)
+    rom.write_byte(0x204D00F, 0x2E)
+    rom.write_byte(0x20535B7, 0x2E)
+    
+    # Ganon Battle -> Sacred Forest Meadow (never heard in triforce hunt)
+    # Child, then adult headers (probably)
+    rom.write_byte(0x20AC00F, 0x65)
+    rom.write_byte(0x20B27D7, 0x65)
+    
+    # Ganondorf Battle -> Zora's Fountian (never heard in triforce hunt)
+    # 3 child then 3 adult headers (maybe? some probably are cutscenes)
+    rom.write_byte(0x211000F, 0x64)
+    rom.write_byte(0x2114377, 0x64)
+    rom.write_byte(0x2114557, 0x64)
+    rom.write_byte(0x2114737, 0x64)
+    rom.write_byte(0x2114817, 0x64)
+    rom.write_byte(0x2114997, 0x64)
+    
+    # Ingo Theme -> Death Mountain Crater (rarely heard)
+    # Child, then adult headers (probably)
+    rom.write_byte(0x224700F, 0x42)
+    rom.write_byte(0x224E227, 0x42)
+    rom.write_byte(0x224E4D7, 0x42)
+    rom.write_byte(0x224E5D7, 0x42)
+    
+    # Horse Race -> Gerudo Fortress (rarely heard)
+    # Child, then adult headers (probably)
+    rom.write_byte(0x21AD00F, 0x40)
+    rom.write_byte(0x21B29B7, 0x40)
+    rom.write_byte(0x21B2CB7, 0x40)
+    rom.write_byte(0x21B32C7, 0x40)
+    
+    # Castle Courtyard -> Desert Colossus (rarely heard)
+    # Child, then adult headers (probably)
+    rom.write_byte(0x218600F, 0x2D)
+    rom.write_byte(0x218D537, 0x2D)
+    
+    # Chamber of the Sages (rarely heard) 0x56
+    rom.write_byte(0x202000F, 0x56) # Graveyard
+    rom.write_byte(0x20261D7, 0x56)
+    rom.write_byte(0x2026557, 0x56)
+    rom.write_byte(0x20268D7, 0x56)
+    rom.write_byte(0x2026C17, 0x56)
+    rom.write_byte(0x3075007, 0x56) # Outside ToT
+    rom.write_byte(0x30E4007, 0x56)
+    rom.write_byte(0x3139007, 0x56)
+	
+    # Overwriting nighttime SFX values so sequences play at nighttime
+    
+    # Kokiri Forest
+    rom.write_byte(0x206F00E, 0x13)
+    rom.write_byte(0x207BC06, 0x13)
+    rom.write_byte(0x207BF16, 0x13)
+    rom.write_byte(0x207CE36, 0x13)
+    
+    # Lost Woods Bridge # Doesn't seem to actually work though, disabling for now
+    #rom.write_byte(0x21520A6, 0x13)
+    #rom.write_byte(0x21520A7, 0x3E) # Assign the Lost Woods sequence value as well
+    
+    # Market Entrance
+    rom.write_byte(0x29DA006, 0x13)
+    rom.write_byte(0x2A01006, 0x13)
+    rom.write_byte(0x29DA007, 0x1D) # Assign the market sequence value as well
+    rom.write_byte(0x2A01007, 0x1D)
+    
+    # Market and Back Alleys
+    rom.write_byte(0x22CF006, 0x13)
+    rom.write_byte(0x29D5006, 0x13)
+    rom.write_byte(0x2A28006, 0x13)
+    rom.write_byte(0x22CF007, 0x1D) # Assign the market sequence value as well
+    rom.write_byte(0x29D5007, 0x1D)
+    rom.write_byte(0x2A28007, 0x1D)
+    
+    # Kakariko Village
+    rom.write_byte(0x1FF900E, 0x13)
+    rom.write_byte(0x20020D6, 0x13)
+    rom.write_byte(0x2002536, 0x13)
+    rom.write_byte(0x2002986, 0x13)
+    
+    # Graveyard / Outside ToT
+    rom.write_byte(0x202000E, 0x13) # Graveyard
+    rom.write_byte(0x20261D6, 0x13)
+    rom.write_byte(0x2026556, 0x13)
+    rom.write_byte(0x20268D6, 0x13)
+    rom.write_byte(0x2026C16, 0x13)
+    rom.write_byte(0x3075006, 0x13) # Outside ToT
+    rom.write_byte(0x30E4006, 0x13)
+    rom.write_byte(0x3139006, 0x13) 
+    
+    # Zora's Fountain
+    rom.write_byte(0x211000E, 0x13)
+    rom.write_byte(0x2114376, 0x13)
+    rom.write_byte(0x2114556, 0x13)
+    rom.write_byte(0x2114736, 0x13)
+    rom.write_byte(0x2114816, 0x13)
+    rom.write_byte(0x2114996, 0x13)
+    
+    # Gerudo Fortress
+    rom.write_byte(0x21AD00E, 0x13)
+    rom.write_byte(0x21B29B6, 0x13)
+    rom.write_byte(0x21B2CB6, 0x13)
+    rom.write_byte(0x21B32C6, 0x13)
+    
+    # Haunted Wasteland
+    rom.write_byte(0x21DC006, 0x13)
+    
+    # All of these are time-passing areas
+    # If these are enabled, egg hatching will not work, so be sure to enable the
+    # chickens and not the eggs!
+    
+    # Hyrule Field
+    rom.write_byte(0x1FB800E, 0x13)
+    rom.write_byte(0x1FC92D6, 0x13)
+    rom.write_byte(0x1FC9696, 0x13)
+    rom.write_byte(0x1FCA186, 0x13)
+    
+    # Death Mountain Trail
+    rom.write_byte(0x221D00E, 0x13)
+    rom.write_byte(0x22245A6, 0x13)
+    
+    # Zora's River
+    rom.write_byte(0x204D00E, 0x13)
+    rom.write_byte(0x20535B6, 0x13)
+    
+    # Lake Hylia
+    rom.write_byte(0x20CB00E, 0x13)
+    rom.write_byte(0x20D2456, 0x13)
+    rom.write_byte(0x20D2786, 0x13)
+    
+    # Gerudo Valley
+    rom.write_byte(0x212B00E, 0x13)
+    rom.write_byte(0x212DC86, 0x13)
+    
+    # Desert Colossus
+    rom.write_byte(0x218600E, 0x13)
+    rom.write_byte(0x218D536, 0x13)
+
+    # Overwrite weather effects so rain doesn't stop music
+
+    # Lake Hylia (adult, pre-water temple)
+    rom.write_byte(0x20E76DE, 0x00)
+
+    # Kakariko (thunderstorm pre-shadow w/first 3 medallions)
+    rom.write_byte(0x20166AA, 0x00)
+    rom.write_byte(0x2016A1A, 0x00)
+
+    # Graveyard (rain in back)
+    rom.write_byte(0x202F2F6, 0x00)
+    rom.write_byte(0x202F70A, 0x00)
+    rom.write_byte(0x202FAFA, 0x00)
+    rom.write_byte(0x202FE4A, 0x00)
+    
+    # Graveyard (thunderstorm pre-shadow w/first 3 medallions
+    rom.write_byte(0x202F4DA, 0x00)
+    rom.write_byte(0x202F8CA, 0x00)
+	
+=========
+MUSIC.PY
+=========
+To fix the cosmetic log, replace this line in shuffle_music:
+    log.bgm[target_sequence.cosmetic_name] = sequence.cosmetic_name
+
+With this block:
+        if (target_sequence.cosmetic_name == "Inside Deku Tree"):
+            log.bgm["Grottos"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Sheik Theme"):
+            log.bgm["Gerudo Training Grounds"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Fairy Flying"):
+            log.bgm["Inside the Deku Tree"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Windmill Hut"):
+            log.bgm["Windmill/BoTW"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Deku Tree"):
+            log.bgm["Lake Hylia"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Castle Escape"):
+            log.bgm["Castle"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Kotake and Koume"):
+            log.bgm["Death Mountain Trail"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Ganondorf Theme"):
+            log.bgm["Zora's River"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Ganon Battle"):
+            log.bgm["Sacred Forest Meadow"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Ganondorf Battle"):
+            log.bgm["Zora's Fountain"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Zelda Theme"):
+            log.bgm["Thieves' Hideout"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Ingo Theme"):
+            log.bgm["Death Mountain Crater"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Horse Race"):
+            log.bgm["Gerudo Fortress"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Battle"):
+            log.bgm["Haunted Wasteland"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Castle Courtyard"):
+            log.bgm["Desert Colossus"] = sequence.cosmetic_name
+        elif (target_sequence.cosmetic_name == "Chamber of the Sages"):
+            log.bgm["Graveayrd/Outside ToT"] = sequence.cosmetic_name
+        else:
+            log.bgm[target_sequence.cosmetic_name] = sequence.cosmetic_name
