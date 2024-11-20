@@ -1,0 +1,125 @@
+body {
+    user-select: none;
+    background-color: beige;
+    margin: 0;
+}
+
+.nodisp {
+    display: none !important;
+}
+
+#header {
+    width: 100%;
+    position: fixed;
+    background-color: white;
+    padding: 4px;
+    border-bottom: 2px solid black;
+    display: flex;
+    justify-content: space-between;
+}
+
+#footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: white;
+    padding: 4px;
+    border-top: 2px solid black;
+}
+
+#footer #saveSongsContainer {
+    float: right;
+    padding-right: 4px;
+}
+
+h1 {
+    font-size: 20px;
+}
+
+.switch-view-button-container {
+    float: right;
+    margin-right: 5px;
+}
+
+#songView, #locationView {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.folder-1, .folder-2, .song-name-container {
+    padding-left: 25px;
+}
+
+.folder-1 > label {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.folder-2 > label {
+    font-weight: bold;
+}
+
+.folder-1 {
+    width: 500px;
+    padding: 3px 25px 13px 0;
+    margin-top: 10px;
+    border: 3px solid black;
+    border-radius: 10px;
+    background-color: bisque;
+}
+
+.folder-1:nth-of-type(even) {
+    background-color: antiquewhite;
+}
+
+.folder-1:hover {
+    color: red;
+}
+
+.folder-2:hover {
+    color: blue;
+}
+
+.song-name-container:hover {
+    font-weight: bold;
+    color: green;
+}
+
+.song-name-container {
+    display: block;
+}
+
+#songLocationDropdowns > div, #fanfareDropdowns > div {
+    display: flex;
+    margin-bottom: 3px;
+}
+
+#songLocationDropdowns .song-location-label {
+    width: 180px;
+}
+
+#fanfareContainer .song-location-label {
+    width: 167px;
+}
+
+#songLocationsContainer, #fanfareContainer {
+    border: 3px solid black;
+    border-radius: 10px;
+    background-color: bisque;
+    padding: 4px;
+}
+
+#fanfareContainer {
+    margin-top: 10px;
+}
+
+#songLocationsContainer div:nth-of-type(even),
+#fanfareContainer div:nth-of-type(even) {
+    background-color: rgba(243, 243, 236);
+}
+
+#songLocationDropdowns > div:hover, #fanfareDropdowns > div:hover {
+    font-weight: bold;
+} 

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Cosmetic Plando Tools</title>
+    <script src="JavaScript/helpers.js"></script>
+    <script src="Javascript/Data/rawSequencePaths.js"></script>
+    <script src="Javascript/Data/data.js"></script>
+    <script src="Javascript/Data/locations.js"></script>
+    <script src="JavaScript/main.js"></script>
+    <script src="JavaScript/songView.js"></script>
+    <script src="JavaScript/locationView.js"></script>
+    <script src="JavaScript/save.js"></script>
+    <link rel="stylesheet" href="Styles/styles.css">
+</head>
+<body onload="Main.onPageLoad()" oncontextmenu="return false">
+    <div id="header">
+        <button id="saveButton" onclick="Save.saveJSON()">Save (0 | 0)</button>
+
+        <div id="songViewHeader">
+            <input id="inputFilter" 
+                type="text" 
+                placeholder="Regex Filter" 
+                size="12" 
+                onblur="SongView.applyFilter()"
+                onkeydown="SongView.onFilterKeyPress(event)" />
+            <input id="inputFilterFlags"
+                type="text"
+                placeholder="Flags"
+                value="i"
+                size="1"
+                onblur="SongView.applyFilter()"
+                onkeydown="SongView.onFilterKeyPress(event)" />
+            <span title="Turn this on to generate a save file with all songs/fanfares filled out, duplicating selections as necessary.">
+                <label for="fillAllCheckbox">Fill All</label>
+                <input id="fillAllCheckbox" type="checkbox" checked="checked" />
+            </span>
+            <button id="toggleFanfareButton" onclick="SongView.toggleFanfares()">Show Fanfares</button>
+            <button onclick="SongView.selectAll(true)">Select All</button>
+            <button onclick="SongView.selectAll(false)">Deselect All</button>
+        </div>
+        <div id="locationViewHeader" class="nodisp">
+            <button id="fillDropdownButton" title="Fills the dropdowns with the selected songs/fanfares; leaves any remainers blank" onclick="LocationView.fillDropdowns()">Fill Dropdowns</button>
+            <button id="fillAllDropdownButton" title="Fills the dropdowns with the selected songs/fanfares; duplicates songs if there are remainders" onclick="LocationView.fillAllDropdowns()">Fill All Dropdowns</button>
+        </div>
+        <div class="switch-view-button-container">
+            <button onclick="Main.switchViews()">Switch Views</button>
+        </div>
+    </div>
+    <div id="footer">
+        <div>
+            <button onclick="Save.saveState()" title="Saves the state of the form">Save Site State</button>
+            <button onclick="Save.loadState()" title="Loads the state of the form">Load Site State</button>
+
+            <div id="saveSongsContainer">
+                <!-- <label for="includeArtistsCheckbox">Include Artists</label>
+                <input id="includeArtistsCheckbox" type="checkbox" />
+                <button onclick="Save.saveSongNames()" title="Saves the song names into a text document">TXT</button>
+                <button onclick="Save.saveSongNames(true)" title="Saves the song names into a json object">JSON</button> -->
+                <button onclick="SongView.selectCustomSongs()" title="Redefine customSongFunction(data) via the dev console to return the list of songs you want checked, then click this to check the songs that pass your test.">Run Custom Function</button>
+            </div>
+        </div>
+    </div>
+    <div id="songView"></div>
+    <div id="locationView" class="nodisp">
+        <div id="songLocationsContainer">
+            <h1 id="songLocationsTitle"></h1>
+            <div id="songLocationDropdowns"></div>
+        </div>
+        <div id="fanfareContainer">
+            <h1 id="fanfareLocationsTitle"></h1>
+            <div id="fanfareDropdowns"></div>
+        </div>
+    </div>
+</body>
