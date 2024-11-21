@@ -179,6 +179,8 @@ To remap music so more sequences are heard, add this block after the block menti
     # Desert Colossus
     rom.write_byte(0x218600E, 0x13)
     rom.write_byte(0x218D536, 0x13)
+	
+==========================
 
     # Overwrite weather effects so rain doesn't stop music
 

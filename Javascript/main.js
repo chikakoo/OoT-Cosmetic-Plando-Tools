@@ -2,6 +2,11 @@ let Main = {
     onLocationView: false,
 
     onPageLoad: function() {
+        if (typeof RawSequencePaths === "undefined") {
+            document.body.innerHTML = "Sequence paths not found! Please run <strong>Scripts/create-raw-sequence-paths.bat</strong> (see the readme for details).";
+            return;
+        }
+
         this.initializeData();
         SongView.initialize();
         LocationView.initialize();
