@@ -1,3 +1,10 @@
+/**
+ * Leave prompt
+ */
+window.onbeforeunload = function() {
+    return "Please make sure you save before leaving!";
+};
+
 let Main = {
     onLocationView: false,
 
