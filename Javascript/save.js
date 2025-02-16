@@ -79,7 +79,7 @@ let Save = {
             }
         });
 
-       FanfareLocations.concat(LowPriorityFanfareLocations).forEach(loc => {
+        FanfareLocations.concat(LowPriorityFanfareLocations).forEach(loc => {
             if (tempExportObj[loc]) {
                 exportObj[loc] = tempExportObj[loc];
             }
@@ -180,7 +180,7 @@ let Save = {
                 selectedSongs = SongView.getSelectedSongs(false).shuffle();
                 i = 0;
             }
-
+            
             saveData[songLocationList[locIndex]] = selectedSongs[i];
         }
 
@@ -261,7 +261,6 @@ let Save = {
             if (dropdownValue && dropdownValue.trim() !== "") {
                 state.dropdowns[dropdownElement.id] = dropdownValue;
             }
-            
         }
 
         return state;
@@ -311,6 +310,8 @@ let Save = {
         let lines = event.target.result;
         let loadedObject = JSON.parse(lines); 
         this._loadSaveFile(loadedObject);
+
+        alert("State loaded successfully!");
     },
 
     /**
@@ -331,6 +332,10 @@ let Save = {
         let dropdownElements = document.getElementsByTagName('select');
         for (let dropdownElement of dropdownElements) {
             dropdownElement.value = loadedObject.dropdowns[dropdownElement.id] || "";
+
+            if (dropdownElement.value) {
+                dropdownElement.onchange();
+            }
         }
 
         // Apply the regex filter in case it was modified

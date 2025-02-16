@@ -8,6 +8,10 @@ window.onbeforeunload = function() {
 let Main = {
     onLocationView: false,
 
+    // Populated by _populateData - a struture containing all top-level artists and an array of all songs by it
+    songData: {},
+    fanfareData: {},
+
     onPageLoad: function() {
         if (typeof RawSequencePaths === "undefined") {
             document.body.innerHTML = "Sequence paths not found! Please run <strong>Scripts/create-raw-sequence-paths.bat</strong> (see the readme for details).";
@@ -76,19 +80,5 @@ let Main = {
     updateSaveButton() {
         let selectedSongsString = `${SongView.getSelectedSongs(false).length} | ${SongView.getSelectedSongs(true).length}`;
         document.getElementById("saveButton").innerText = `Save (${selectedSongsString})`;
-    },
-
-    /**
-     * Given one of the song/fanfare data objects, traverses through and grabs the flat data values, sorted
-     * @param dataObject - the data object
-     */
-    getFlatDataValues: function(getFanfares) {
-        let dataValues = [];
-        let cssClassToCheck = getFanfares ? "fanfare-name" : "song-name";
-        let elements = document.getElementsByClassName(cssClassToCheck);
-        for (let element of elements) {
-            dataValues.push(element.id.split("||")[1]);
-        }
-        return dataValues.sort();
     }
 };

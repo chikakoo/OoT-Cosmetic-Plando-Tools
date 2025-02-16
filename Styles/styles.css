@@ -123,3 +123,7 @@ h1 {
 #songLocationDropdowns > div:hover, #fanfareDropdowns > div:hover {
     font-weight: bold;
 } 
+
+#locationView select {
+    margin-right: 3px;
+}

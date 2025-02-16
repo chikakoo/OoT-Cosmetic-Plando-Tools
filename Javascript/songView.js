@@ -129,6 +129,10 @@ let SongView = {
     },
 
     _populateData: function(rawData, dataObject, directoryStartString) {
+        let mainData = directoryStartString === "Custom Fanfares\\"
+            ? Main.fanfareData 
+            : Main.songData;
+
         rawData.forEach(rawSongName => {
             let directory = rawSongName.substring(rawSongName.lastIndexOf(directoryStartString)).replace(directoryStartString, "");
             
@@ -171,6 +175,9 @@ let SongView = {
                 dataObject[folder1] = dataObject[folder1] || { data: [] };
                 dataObject[folder1].data.push(songName);
             }
+
+            mainData[folder1] = mainData[folder1] || [];
+            mainData[folder1].push(songName);
         });
     },
 

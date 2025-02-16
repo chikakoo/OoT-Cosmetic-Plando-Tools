@@ -21,7 +21,7 @@ let LocationView = {
         let _this = this;
         locationList.forEach(loc => {
             if (document.getElementById(_this._getLockCheckboxId(loc)).checked) {
-                let songName = document.getElementById(_this._getDropdownId(loc)).value;
+                let songName = document.getElementById(_this._getSongDropdownId(loc)).value;
                 if (songName) {
                     lockedSongs.push(songName);
                 }
@@ -43,7 +43,7 @@ let LocationView = {
     },
 
     getSongByLocation: function(location) {
-        let dropdown = document.getElementById(this._getDropdownId(location));
+        let dropdown = document.getElementById(this._getSongDropdownId(location));
         return dropdown ? dropdown.value : "";
     },
 
@@ -60,36 +60,85 @@ let LocationView = {
 
             let container = dce("div");
             container.appendChild(label);
-            container.appendChild(_this._createDropdown.call(_this, loc, isForFanfares));
+            container.appendChild(_this._createArtistDropdown.call(_this, loc, isForFanfares));
+            container.appendChild(_this._createSongDropdown.call(_this, loc));
             container.appendChild(checkbox);
             dropdownContainer.appendChild(container);
         });
     },
 
-    _createDropdown: function(forLocation, isForFanfare) {
-        let dropdown = dce("select");
-        dropdown.id = this._getDropdownId(forLocation);
+    _createArtistDropdown: function(forLocation, isForFanfare) {
+        let dropdown = this._createDropdown(this._getArtistDropdownId(forLocation));
+        let artists = isForFanfare
+            ? Object.keys(Main.fanfareData)
+            : Object.keys(Main.songData);
+
+        artists.forEach(artist => {
+            let optionElement = dce("option");
+            optionElement.value = artist;
+            optionElement.innerText = artist;
+            dropdown.appendChild(optionElement);
+        });
+
+        let _this = this;
+        dropdown.onchange = function() {
+            if (!dropdown.value) {
+                delete CurrentSaveData[forLocation];
+            }
+            _this._populateSongDropdown(forLocation, dropdown.value, isForFanfare);
+        }
+
+        return dropdown;
+    },
+
+    _createSongDropdown: function(forLocation) {
+        let dropdown = this._createDropdown(this._getSongDropdownId(forLocation));
         dropdown.onchange = function() {
             CurrentSaveData[forLocation] = dropdown.value;
         }
+        return dropdown;
+    },
+
+    _populateSongDropdown: function(forLocation, forArtist, isForFanfare) {
+        let dropdown = document.getElementById(this._getSongDropdownId(forLocation));
+        dropdown.innerHTML = "";
+        delete CurrentSaveData[forLocation];
+
+        let songs = isForFanfare
+            ? Main.fanfareData[forArtist]
+            : Main.songData[forArtist];
+
+        if (!songs) {
+            return;
+        }
+
+        songs.forEach(song => {
+            let optionElement = dce("option");
+            optionElement.value = song;
+            optionElement.innerText = song;
+            dropdown.appendChild(optionElement);
+        });
+
+        CurrentSaveData[forLocation] = dropdown.value;
+    },
+
+    _createDropdown: function(dropdownId) {
+        let dropdown = dce("select");
+        dropdown.id = dropdownId;
 
         let defaultOption = dce("option");
         defaultOption.value = "";
         dropdown.appendChild(defaultOption);
 
-        let options = Main.getFlatDataValues(isForFanfare)
-        options.forEach(option => {
-            let optionElement = dce("option");
-            optionElement.value = option;
-            optionElement.innerText = option;
-            dropdown.appendChild(optionElement);
-        });
-
         return dropdown;
     },
 
-    _getDropdownId: function(locName) {
-        return `dropdown|${locName}`;
+    _getArtistDropdownId: function(locName) {
+        return `artistDropdown|${locName}`;
+    },
+
+    _getSongDropdownId: function (locName) {
+        return `songDropdown|${locName}`;
     },
 
     _getLockCheckboxId: function(locName) {
@@ -124,8 +173,18 @@ let LocationView = {
 
         let _this = this;
         Object.keys(CurrentSaveData).forEach(locName => {
-            let dropdown = document.getElementById(_this._getDropdownId(locName));
-            dropdown.value = CurrentSaveData[locName];
+            let songDropdown = document.getElementById(_this._getSongDropdownId(locName));
+
+            // This makes the UI weird, but it should work
+            let song = CurrentSaveData[locName];
+            if (song) {
+                let optionElement = dce("option");
+                optionElement.value = song;
+                optionElement.innerText = song;
+                songDropdown.appendChild(optionElement);
+    
+                songDropdown.value = CurrentSaveData[locName];
+            }
         });
     }
 };
