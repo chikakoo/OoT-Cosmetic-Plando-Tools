@@ -45,7 +45,7 @@ let Main = {
      */
     _fillLocationTitles: function() {
         let songTitleElement = document.getElementById("songLocationsTitle");
-        songTitleElement.innerText = `Song Locations (${Locations.length + LowPriotityLocations.length})`;
+        songTitleElement.innerText = `Song Locations (${Locations.length + LowPriorityLocations.length})`;
 
         let fanfareTitleElment = document.getElementById("fanfareLocationsTitle");
         fanfareTitleElment.innerText = `Fanfare Locations (${FanfareLocations.length + LowPriorityFanfareLocations.length})`;

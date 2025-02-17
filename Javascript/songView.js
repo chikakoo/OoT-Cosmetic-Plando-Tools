@@ -116,6 +116,27 @@ let SongView = {
         return selectedSongs;
     },
 
+    /**
+     * Gets the selected artists and songs - that is, those that are checked
+     * Used when getting save data - so the order is shuffled
+     * @param {boolean} isFanfare - whether this is for fanfares
+     * @returns The selected artists and songs
+     */
+    getSelectedArtistsAndSongs: function(isFanfare) {
+        let data = [];
+        let cssClassToCheck = isFanfare ? this._fanfareCssClass : this._songCssClass;
+        let elements = [...document.getElementsByClassName(cssClassToCheck)].shuffle();
+        for (let element of elements) {
+            if (element.checked) {
+                data.push({
+                    artist: element.id.split("|")[1],
+                    song: element.id.split("||")[1]
+                });
+            }
+        }
+        return data;
+    },
+
     selectAll: function(selectAll) {
         let cssClassToCheck = this._showingFanfares ? this._fanfareCssClass : this._songCssClass;
         let elements = document.getElementsByClassName(cssClassToCheck);
@@ -211,8 +232,8 @@ let SongView = {
 
     _createGroupCheckBoxDiv: function(path, path2, displayFanfares) {
         let pathPrefix = displayFanfares ? "fanfarePath" : "path";
-        let pathId = path2 ? `${pathPrefix}-${path}-${path2}` : `${pathPrefix}-${path}`;
-        let inputPathId = `input-${pathId}`;
+        let pathId = path2 ? `${pathPrefix}|${path}|${path2}` : `${pathPrefix}-${path}`;
+        let inputPathId = `input|${pathId}`;
 
         let pathContainer = dce("div", `folder-${path2 ? 2 : 1}`);
         pathContainer.id = pathId;
@@ -237,7 +258,7 @@ let SongView = {
     },
 
     _createSongNameDiv: function(parent, folder1, folder2, songName, cssClass) {
-        let inputId = `input-${folder1}-${folder2}||${songName}`;
+        let inputId = `input|${folder1}|${folder2}||${songName}`;
 
         let songNameInput = dce("input", cssClass);
         songNameInput.id = inputId;

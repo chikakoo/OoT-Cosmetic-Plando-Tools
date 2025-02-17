@@ -49,7 +49,7 @@ let Locations = [
     "Chamber of the Sages" // Graveyard/Outside ToT
 ];
 
-let LowPriotityLocations = [
+let LowPriorityLocations = [
     // Chance that the song that gets mapped here won't even work due to a rando bug
     "Kaepora Gaebora"
 ];
@@ -59,6 +59,7 @@ let LowPriotityLocations = [
  * This is to handle remapped names in a user-friendly way
  */
 let LocationDisplayNames = {
+    // Locations
     "Sheik Theme": "Gerudo Training Grounds",
     "Fairy Flying": "Inside the Deku Tree",
     "Inside Deku Tree": "Grottos",
@@ -75,7 +76,10 @@ let LocationDisplayNames = {
     "Castle Courtyard": "Desert Colossus",
     "Castle Underground": "Inside Ganon's Castle", // This name is confusing, so renaming
     "Chamber of the Sages": "Graveyard/Outside ToT",
-    "Windmill Hut": "BotW/Windmill"
+    "Windmill Hut": "BotW/Windmill",
+
+    // Fanfares
+    "Zelda Turns Around": "Rescue Prisoner"
 };
 
 let FanfareLocations = [

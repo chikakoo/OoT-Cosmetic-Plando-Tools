@@ -7,7 +7,7 @@ let LocationView = {
             if (item1 > item2) { return 1; }
             return 0;
         })
-        .concat(LowPriotityLocations.sort()),
+        .concat(LowPriorityLocations.sort()),
     _sortedFanfares: FanfareLocations.sort().concat(LowPriorityFanfareLocations.sort()),
 
     initialize: function() {
@@ -42,9 +42,13 @@ let LocationView = {
         return lockedLocations;
     },
 
-    getSongByLocation: function(location) {
-        let dropdown = document.getElementById(this._getSongDropdownId(location));
-        return dropdown ? dropdown.value : "";
+    getArtistAndSongByLocation: function(location) {
+        let artistDropdown = document.getElementById(this._getArtistDropdownId(location));
+        let songDropdown = document.getElementById(this._getSongDropdownId(location));
+        return {
+            artist: artistDropdown ? artistDropdown.value : "",
+            song: songDropdown ? songDropdown.value : ""
+        };
     },
 
     _createDropdowns: function(dropdownContainer, isForFanfares) {
@@ -172,19 +176,30 @@ let LocationView = {
         }
 
         let _this = this;
-        Object.keys(CurrentSaveData).forEach(locName => {
-            let songDropdown = document.getElementById(_this._getSongDropdownId(locName));
+        let artistData = {};
+        let songData = {};
 
-            // This makes the UI weird, but it should work
-            let song = CurrentSaveData[locName];
-            if (song) {
-                let optionElement = dce("option");
-                optionElement.value = song;
-                optionElement.innerText = song;
-                songDropdown.appendChild(optionElement);
-    
-                songDropdown.value = CurrentSaveData[locName];
+        Object.keys(CurrentSaveData).forEach(key => {
+            let value = CurrentSaveData[key];
+
+            if (key.startsWith("loc-artist|")) {
+                let locName = key.split("|")[1];
+                artistData[locName] = value;
+            } else {
+                songData[key] = value;
             }
+        });
+
+        Object.keys(artistData).forEach(locName => {
+            let artistDropdown = document.getElementById(_this._getArtistDropdownId(locName));
+            artistDropdown.value = artistData[locName];
+            artistDropdown.onchange(); // Fills the song dropdown
+        });
+
+        Object.keys(songData).forEach(locName => {
+            let songDropdown = document.getElementById(_this._getSongDropdownId(locName));
+            songDropdown.value = songData[locName];
+            songDropdown.onchange(); // Sets the save data
         });
     }
 };
