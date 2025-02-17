@@ -63,10 +63,10 @@ let LocationView = {
             checkbox.type = "checkbox";
 
             let container = dce("div");
+            container.appendChild(checkbox);
             container.appendChild(label);
             container.appendChild(_this._createArtistDropdown.call(_this, loc, isForFanfares));
             container.appendChild(_this._createSongDropdown.call(_this, loc));
-            container.appendChild(checkbox);
             dropdownContainer.appendChild(container);
         });
     },
