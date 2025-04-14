@@ -195,6 +195,8 @@ let Save = {
         let locationList = isFanfare
             ? this._getFanfareLocationList()
             : this._getSongLocationList();
+
+        selectedSongs = selectedSongs.filter(songData => !LocationView.getLockedSongs().includes(songData.song))
         let songLocationList = locationList.filter(loc => !LocationView.getLockedLocations().includes(loc));
         
         for (let locIndex = 0, i = 0; locIndex < songLocationList.length; locIndex++, i++) {
