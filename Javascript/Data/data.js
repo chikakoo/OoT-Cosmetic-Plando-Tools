@@ -17,7 +17,7 @@ let OriginalSongNames = [
     "Kakariko Child",
     "Deku Tree",
     "Fairy Flying",
-    "Kaepora Gaebora",
+    //"Kaepora Gaebora", // Using a seq file to prevent issues with fanfares
     "Battle",
     "Chamber of the Sages",
     "Dodongos Cavern",

@@ -56,7 +56,7 @@ let Main = {
      */
     _populateOriginalSongs: function() {
         OriginalSongNames.forEach(song => {
-            RawSongNames.push(`Custom Music\\Zelda\\Ocarina of Time\\OoT - ${song}.ootrs`);
+            RawSongNames.push(`Custom Music\\Zelda\\Ocarina of Time\\Ocarina of Time - ${song}.ootrs`);
         });
     },
 
@@ -65,7 +65,7 @@ let Main = {
      */
     _populateOriginalFanfares: function() {
         OriginalFanfareNammes.forEach(song => {
-            RawFanfareNames.push(`Custom Fanfares\\Zelda\\Ocarina of Time\\F - OoT - ${song}.ootrs`);
+            RawFanfareNames.push(`Custom Fanfares\\Zelda\\Ocarina of Time\\F - Ocarina of Time - ${song}.ootrs`);
         });
     },
 

@@ -103,12 +103,15 @@ let Save = {
      * @param exportObj - the object to sanitize
      */
     _sanitizeExportObj: function(exportObj) {
-        let originalSongPrefix = "OoT - ";
-        let originalFanfarePrefix = "F - OoT - ";
+        let originalSongPrefix = "Ocarina of Time - ";
+        let originalFanfarePrefix = "F - Ocarina of Time - ";
         Object.keys(exportObj).forEach(loc => {
             let seqName = exportObj[loc];
-            if (seqName.startsWith(originalSongPrefix)) {
-                exportObj[loc] = seqName.replace(originalSongPrefix, "");
+            let seqNoPrefix = seqName.replace(originalSongPrefix, "");
+            if (seqName.startsWith(originalSongPrefix) &&
+                 OriginalSongNames.includes(seqNoPrefix) // Specifically, Kaepora Gaebora
+            ) {
+                exportObj[loc] = seqNoPrefix;
             } else if (seqName.startsWith(originalFanfarePrefix)) {
                 exportObj[loc] = seqName.replace(originalFanfarePrefix, "");
             }

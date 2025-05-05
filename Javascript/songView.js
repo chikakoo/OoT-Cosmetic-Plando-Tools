@@ -41,8 +41,9 @@ let SongView = {
 
     /**
      * Apply the regex filter - hides song containers and any empty resulting groups
+     * @param onlyShowSelected - Shows only selected songs (ignores the regex filter)
      */
-    applyFilter: function() {
+    applyFilter: function(onlyShowSelected) {
         let inputFilter = document.getElementById("inputFilter");
         let regex = inputFilter.value;
 
@@ -63,12 +64,17 @@ let SongView = {
                     }
                     let songName = songInfoArray[songInfoArray.length - 1];
         
-                    // Hide the song contianer itself - case intensive regex match
-                    let flags = document.getElementById("inputFilterFlags").value;
-                    let hideSongName = flags
-                        ? !new RegExp(regex, flags).test(songName)
-                        : !new RegExp(regex).test(songName);
+                    let hideSongName = false;
 
+                    if (onlyShowSelected) {
+                        hideSongName = !element.checked;
+                    } else {
+                        let flags = document.getElementById("inputFilterFlags").value;
+                        hideSongName = flags
+                            ? !new RegExp(regex, flags).test(songName)
+                            : !new RegExp(regex).test(songName);
+                    }
+                    
                     addOrRemoveCssClass(songNameContainer, "nodisp", hideSongName);
     
                     // If we didn't mark the visible flag, do so if this song is visible

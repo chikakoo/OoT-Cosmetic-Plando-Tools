@@ -77,6 +77,7 @@ let LocationDisplayNames = {
     "Castle Underground": "Inside Ganon's Castle", // This name is confusing, so renaming
     "Chamber of the Sages": "Graveyard/Outside ToT",
     "Windmill Hut": "BotW/Windmill",
+    "Zoras Domain": "Zora's Domain",
 
     // Fanfares
     "Zelda Turns Around": "Rescue Prisoner"
