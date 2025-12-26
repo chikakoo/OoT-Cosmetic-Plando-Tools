@@ -13,4 +13,29 @@ for /r "%SequenceFolder%" %%f in (*.ootrs) do (
 )
 echo ];>>%SequenceJs%
 
+REM Validate that no .ootrs file exists that doesn't match the "Artist - Song" pattern
+echo.
+echo =================
+echo.
+
+setlocal EnableDelayedExpansion
+for /r "%SequenceFolder%" %%f in (*.ootrs) do (
+    set "name=%%~nxf"
+
+    REM Remove " - " if it exists
+    set "check=!name: - =!"
+
+    REM If nothing changed, the pattern was not found
+    if "!check!"=="!name!" (
+        echo WARNING - .ootrs file found with invalid format: !name!
+    )
+)
+
+REM Validate that there's no raw .seq file out there, as this usually indicates
+REM that the .ootrs file was not actually copied
+for /r "%SequenceFolder%" %%f in (*.seq) do (
+  echo WARNING - Raw .seq file found: %%~nxf
+)
+
+echo.
 pause
