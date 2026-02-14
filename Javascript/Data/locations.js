@@ -92,7 +92,8 @@ let FanfareLocations = [
     "Spirit Stone Get",
     "Heart Piece Get",
     "Epona Race Goal",
-    "Master Sword"
+    "Master Sword",
+    "Zelda Turns Around" // Heard when talking to rescused gorons or guards
 ];
 
 let LowPriorityFanfareLocations = [
@@ -100,7 +101,6 @@ let LowPriorityFanfareLocations = [
     "Escape from Ranch",
     "Door of Time",
     "Ganons Rainbow Bridge",
-    "Zelda Turns Around" // Heard when talking to rescused gorons or guards
 ];
 
 // Disabled locations - never heard due to rando
