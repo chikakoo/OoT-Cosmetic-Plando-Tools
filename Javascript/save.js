@@ -280,6 +280,12 @@ let Save = {
         // Store the dropdowns as the text value in case more songs get added
         let dropdownElements = document.getElementsByTagName('select');
         for (let dropdownElement of dropdownElements) {
+            if (dropdownElement.selectedOptions.length === 0)
+            {
+                // If you select an option and clear it, this kind of glitches out
+                continue;
+            }
+
             let dropdownValue = dropdownElement.selectedOptions[0].innerText;
             if (dropdownValue && dropdownValue.trim() !== "") {
                 state.dropdowns[dropdownElement.id] = dropdownValue;
